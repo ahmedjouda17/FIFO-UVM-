@@ -120,28 +120,6 @@ The following matrix organizes the verification scope described in the
 project report. It maps requirements to stimulus and checking methods;
 it does not imply that every individual coverage bin has been closed.
 
-| ID | Requirement | Stimulus / scenario | Checking and evidence |
-|---|---|---|---|
-| FIFO-01 | Reset clears pointers and occupancy | Assert active-low reset | Reset-state assertions and reset waveform |
-| FIFO-02 | Reset clears `data_out` | Reset after FIFO activity | Reference-model comparison and waveform |
-| FIFO-03 | Accepted writes store data in FIFO order | Write-only traffic with randomized data | Subsequent readback through scoreboard; write waveform |
-| FIFO-04 | Accepted reads return the oldest queued word | Read-only traffic after writes | Reference-model scoreboard; read waveform |
-| FIFO-05 | Successful writes assert `wr_ack` | Write while not full | Accepted-write acknowledgment assertion |
-| FIFO-06 | Writes at full are rejected | Fill FIFO, then request another write | Overflow / no-ack assertion, pointer-hold check, and readback |
-| FIFO-07 | Reads at empty are rejected | Drain FIFO, then request another read | Underflow assertion and read-pointer hold check |
-| FIFO-08 | Accepted reads do not assert underflow | Read while nonempty | Accepted-read / no-underflow assertion |
-| FIFO-09 | `full` matches maximum occupancy | Fill FIFO and read from full | Full-flag equivalence assertion |
-| FIFO-10 | `empty` matches zero occupancy | Reset, drain, and write from empty | Empty-flag equivalence assertion |
-| FIFO-11 | `almostfull` asserts at depth − 1 | Exercise occupancy around seven entries | Almost-full equivalence assertion |
-| FIFO-12 | `almostempty` asserts at one entry | Exercise occupancy around one entry | Almost-empty equivalence assertion |
-| FIFO-13 | Write pointer advances and wraps correctly | Repeated accepted writes across the last address | Modulo-increment assertion |
-| FIFO-14 | Read pointer advances and wraps correctly | Repeated accepted reads across the last address | Modulo-increment assertion |
-| FIFO-15 | Pointers hold when their operation is not accepted | Idle, blocked writes, and blocked reads | Write/read pointer-hold assertions |
-| FIFO-16 | Occupancy remains within valid bounds | All traffic scenarios | Count-range assertion |
-| FIFO-17 | Simultaneous accepted read/write preserves occupancy | Both enables high while partially occupied | Stable-count assertion and scoreboard |
-| FIFO-18 | Simultaneous requests at empty accept only the write | Both enables high at empty | Boundary behavior checked against the reference model |
-| FIFO-19 | Simultaneous requests at full accept only the read | Both enables high at full | Boundary behavior checked against the reference model |
-| FIFO-20 | Idle operation preserves queued data and pointers | Both enables low | Pointer-hold assertions, waveform, and subsequent readback |
 
 The report records execution of reset, write-only, read-only, read/write,
 and idle scenarios. Individual boundary-case closure should be assessed
